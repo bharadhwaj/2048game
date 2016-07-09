@@ -1,1 +1,0 @@
-In move up, elements don't get attached.

@@ -48,6 +48,10 @@ def moveup(tiles):
 					tiles[i][column] = tiles[i+1][column]
 					tiles[i+1][column] = 0
 					i -= 1
+				if i == 0:
+					if tiles[i][column] == tiles[i+1][column]:
+						tiles[i][column] = 2*tiles[i+1][column]
+						tiles[i+1][column] = 0
 			else:	
 				if tiles[row-1][column] == tiles[row][column]:
 					tiles[row-1][column] = 2*tiles[row][column]
@@ -57,27 +61,34 @@ def moveup(tiles):
 						tiles[i][column] = tiles[i+1][column]
 						tiles[i+1][column] = 0
 						i -= 1
+					
 	return tiles
 
 def movedown(tiles):
-	for row in range(2,-1,-1):
+	for row in range(3,0,-1):
 		for column in range(4):
-			if tiles[row+1][column] == 0:
-				i = row+1
-				while tiles[i][column] == 0 and i >= 0 and i < 3:
-					tiles[i][column] = tiles[i-1][column]
-					tiles[i-1][column] = 0
-					i -= 1
+			if tiles[row][column] == 0:
+				loop = True
+				if tiles[row-1][column] != 0:
+					i = row-1
+				elif tiles[max(row-2, 0)][column] != 0:
+					i = row-2
+				elif tiles[max(row-3, 0)][column] != 0:
+					i = row-3
+				else:
+					loop = False
+				if loop:
+					tiles[row][column],tiles[i][column] = tiles[i][column], 0
+					if row < 3:
+						if tiles[row+1][column] == tiles[row][column]:
+							tiles[row+1][column] = 2*tiles[row][column]
+							tiles[row][column] = 0
 			else:	
-				if tiles[row+1][column] == tiles[row][column]:
-					tiles[row+1][column] = 2*tiles[row][column]
-					tiles[row][column] = 0
-					i = row
-					while tiles[i][column] == 0 and i >= 0 and i < 3:
-						tiles[i][column] = tiles[i-1][column]
-						tiles[i-1][column] = 0
-						i -= 1
+				if tiles[row][column] == tiles[row-1][column]:
+					tiles[row][column] = 2*tiles[row-1][column]
+					tiles[row-1][column] = 0
 	return tiles
+	
 
 def main():
     tiles = [[0 for i in range(4)] for j in range(4)]
@@ -92,6 +103,7 @@ def main():
 		if keystroke == 'w':
 			tiles = moveup(tiles)
 			tiles = generate_element(tiles)
+
 		elif keystroke == 's':
 			tiles = movedown(tiles)
 			tiles = generate_element(tiles)
