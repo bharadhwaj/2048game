@@ -48,7 +48,6 @@ def moveup(tiles):
 	ready = False
 	for i in tiles[0]:
 		if i == 0:
-
 			ready = True
 	if ready: 
 		for row in range(1,4):
