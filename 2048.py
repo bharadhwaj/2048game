@@ -45,123 +45,103 @@ def print_array(tiles):
 	    print
 
 def moveup(tiles):
-	ready = False
-	for i in tiles[0]:
-		if i == 0:
-			ready = True
-	if ready: 
-		for row in range(1,4):
-			for column in range(4):
-				if tiles[row-1][column] == 0:
-					i = row-1
+	for row in range(1,4):
+		for column in range(4):
+			if tiles[row-1][column] == 0:
+				i = row-1
+				while tiles[i][column] == 0 and i >= 0 and i < 3:
+					tiles[i][column] = tiles[i+1][column]
+					tiles[i+1][column] = 0
+					i -= 1
+				if i == 0:
+					if tiles[i][column] == tiles[i+1][column]:
+						tiles[i][column] = 2*tiles[i+1][column]
+						tiles[i+1][column] = 0
+			else:	
+				if tiles[row-1][column] == tiles[row][column]:
+					tiles[row-1][column] = 2*tiles[row][column]
+					tiles[row][column] = 0
+					i = row
 					while tiles[i][column] == 0 and i >= 0 and i < 3:
 						tiles[i][column] = tiles[i+1][column]
 						tiles[i+1][column] = 0
 						i -= 1
-					if i == 0:
-						if tiles[i][column] == tiles[i+1][column]:
-							tiles[i][column] = 2*tiles[i+1][column]
-							tiles[i+1][column] = 0
-				else:	
-					if tiles[row-1][column] == tiles[row][column]:
-						tiles[row-1][column] = 2*tiles[row][column]
-						tiles[row][column] = 0
-						i = row
-						while tiles[i][column] == 0 and i >= 0 and i < 3:
-							tiles[i][column] = tiles[i+1][column]
-							tiles[i+1][column] = 0
-							i -= 1
 					
 	return tiles
 
 def movedown(tiles):
-	ready = False
-	for i in tiles[3]:
-		if i == 0:
-			ready = True
-	if ready: 
-		for row in range(3,0,-1):
-			for column in range(4):
-				if tiles[row][column] == 0:
-					loop = True
-					if tiles[row-1][column] != 0:
-						i = row-1
-					elif tiles[max(row-2, 0)][column] != 0:
-						i = row-2
-					elif tiles[max(row-3, 0)][column] != 0:
-						i = row-3
-					else:
-						loop = False
-					if loop:
-						tiles[row][column],tiles[i][column] = tiles[i][column], 0
-						if row < 3:
-							if tiles[row+1][column] == tiles[row][column]:
-								tiles[row+1][column] = 2*tiles[row][column]
-								tiles[row][column] = 0
-				else:	
-					if tiles[row][column] == tiles[row-1][column]:
-						tiles[row][column] = 2*tiles[row-1][column]
-						tiles[row-1][column] = 0
+	for row in range(3,0,-1):
+		for column in range(4):
+			if tiles[row][column] == 0:
+				loop = True
+				if tiles[row-1][column] != 0:
+					i = row-1
+				elif tiles[max(row-2, 0)][column] != 0:
+					i = row-2
+				elif tiles[max(row-3, 0)][column] != 0:
+					i = row-3
+				else:
+					loop = False
+				if loop:
+					tiles[row][column],tiles[i][column] = tiles[i][column], 0
+					if row < 3:
+						if tiles[row+1][column] == tiles[row][column]:
+							tiles[row+1][column] = 2*tiles[row][column]
+							tiles[row][column] = 0
+			else:	
+				if tiles[row][column] == tiles[row-1][column]:
+					tiles[row][column] = 2*tiles[row-1][column]
+					tiles[row-1][column] = 0
 	return tiles
 	
 def moveleft(tiles):
-	ready = False
-	for i in tiles:
-		if i[0] == 0:
-			ready = True
-	if ready: 
-		for row in range(4):
-			for column in range(1, 4):
-				if tiles[row][column-1] == 0:
-					i = column-1
+	for row in range(4):
+		for column in range(1, 4):
+			if tiles[row][column-1] == 0:
+				i = column-1
+				while tiles[row][i] == 0 and i >= 0 and i < 3:
+					tiles[row][i] = tiles[row][i+1]
+					tiles[row][i+1] = 0
+					i -= 1
+				if i == 0:
+					if tiles[row][i] == tiles[row][i+1]:
+						tiles[row][i] = 2*tiles[row][i+1]
+						tiles[row][i+1] = 0
+			else:	
+				if tiles[row][column-1] == tiles[row][column]:
+					tiles[row][column-1] = 2*tiles[row][column]
+					tiles[row][column] = 0
+					i = column
 					while tiles[row][i] == 0 and i >= 0 and i < 3:
 						tiles[row][i] = tiles[row][i+1]
 						tiles[row][i+1] = 0
 						i -= 1
-					if i == 0:
-						if tiles[row][i] == tiles[row][i+1]:
-							tiles[row][i] = 2*tiles[row][i+1]
-							tiles[row][i+1] = 0
-				else:	
-					if tiles[row][column-1] == tiles[row][column]:
-						tiles[row][column-1] = 2*tiles[row][column]
-						tiles[row][column] = 0
-						i = column
-						while tiles[row][i] == 0 and i >= 0 and i < 3:
-							tiles[row][i] = tiles[row][i+1]
-							tiles[row][i+1] = 0
-							i -= 1
 					
 	return tiles
 
 def moveright(tiles):
-	ready = False
-	for i in tiles:
-		if i[3] == 0:
-			ready = True
-	if ready: 
-		for row in range(4):
-			for column in range(3,0,-1):
-				if tiles[row][column] == 0:
-					loop = True
-					if tiles[row][column-1] != 0:
-						i = column-1
-					elif tiles[row][max(column-2, 0)] != 0:
-						i = column-2
-					elif tiles[row][max(column-3, 0)] != 0:
-						i = column-3
-					else:
-						loop = False
-					if loop:
-						tiles[row][column],tiles[row][i] = tiles[row][i], 0
-						if column < 3:
-							if tiles[row][column+1] == tiles[row][column]:
-								tiles[row][column+1] = 2*tiles[row][column]
-								tiles[row][column] = 0
-				else:	
-					if tiles[row][column] == tiles[row][column-1]:
-						tiles[row][column] = 2*tiles[row][column-1]
-						tiles[row][column-1] = 0
+	for row in range(4):
+		for column in range(3,0,-1):
+			if tiles[row][column] == 0:
+				loop = True
+				if tiles[row][column-1] != 0:
+					i = column-1
+				elif tiles[row][max(column-2, 0)] != 0:
+					i = column-2
+				elif tiles[row][max(column-3, 0)] != 0:
+					i = column-3
+				else:
+					loop = False
+				if loop:
+					tiles[row][column],tiles[row][i] = tiles[row][i], 0
+					if column < 3:
+						if tiles[row][column+1] == tiles[row][column]:
+							tiles[row][column+1] = 2*tiles[row][column]
+							tiles[row][column] = 0
+			else:	
+				if tiles[row][column] == tiles[row][column-1]:
+					tiles[row][column] = 2*tiles[row][column-1]
+					tiles[row][column-1] = 0
 	return tiles
 
 def main():
