@@ -4,10 +4,13 @@ def getelement():
     return 2 if random() < 0.67 else 4
 
 def  checker(tiles):
-    for row in tiles:
-    	if 2048 in row:
-    		return True
-    return False
+	if 'Error' not in tiles:
+	    for row in tiles:
+	    	if 2048 in row:
+	    		return True
+	    return False
+
+
 def generate_element(tiles):
 	gen_x = randrange(0, 4)
 	gen_y = randrange(0, 4)
@@ -16,19 +19,12 @@ def generate_element(tiles):
 
 	if tiles[gen_x][gen_y] != 0:
 		found = False
-		for row in range(gen_x, 4):
-			for column in range(gen_y, 4):
+		for row in range(0, 4):
+			for column in range(0, 4):
 				if tiles[row][column] == 0:
 					found = True
 					tiles[row][column] = gen_n
 					return tiles
-		if found == False:
-			for row in range(0, gen_x):
-				for column in range(0, gen_y):
-					if tiles[row][column] == 0:
-						found = True
-						tiles[row][column] = gen_n
-						return tiles
 		if found == False:
 			return ['Error']
 	else:
@@ -167,8 +163,12 @@ def main():
 		elif keystroke == 'd':
 			tiles = moveright(tiles)
 			tiles = generate_element(tiles)
+		if 'Error' not in tiles:
+			print_array(tiles)
+		else:
+			print 'Failed: Sorry! No move moves allowed!'
+			return
 
-		print_array(tiles)
 		found = checker(tiles)
 		if found:
 			print 'Success. You won the game.'
