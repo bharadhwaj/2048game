@@ -79,7 +79,7 @@ def movedown(tiles):
 				else:
 					loop = False
 				if loop:
-					tiles[row][column],tiles[i][column] = tiles[i][column], 0
+					tiles[row][column], tiles[i][column] = tiles[i][column], 0
 					if row < 3:
 						if tiles[row+1][column] == tiles[row][column]:
 							tiles[row+1][column] = 2*tiles[row][column]
@@ -146,23 +146,25 @@ def main():
     tiles = generate_element(tiles)
     print_array(tiles)
     keystroke = ''
-    while keystroke != 'z':
+    while keystroke != 'z' or keystroke != 'Z':
 		keystroke = raw_input("Movement? ")
-		if keystroke != 'w' and keystroke != 'a' and keystroke != 's' and keystroke != 'd' and keystroke != 'z' and keystroke != 'W' and read != 'A' and read != 'S' and read != 'D' and read != 'Z':
-			print 'Error: Wrong Input! Try again with valid Input!'
-			continue
-		if keystroke == 'w':
+		if keystroke == 'w' or keystroke == 'W':
 			tiles = moveup(tiles)
 			tiles = generate_element(tiles)
-		elif keystroke == 's':
+		elif keystroke == 's' or keystroke == 'S':
 			tiles = movedown(tiles)
 			tiles = generate_element(tiles)
-		elif keystroke == 'a':
+		elif keystroke == 'a' or keystroke == 'A':
 			tiles = moveleft(tiles)
 			tiles = generate_element(tiles)
-		elif keystroke == 'd':
+		elif keystroke == 'd' or keystroke == 'D':
 			tiles = moveright(tiles)
 			tiles = generate_element(tiles)
+		elif keystroke == 'z' or keystroke == 'Z':
+			break
+		else:
+			print 'Error: Wrong Input! Try again with valid Input!'
+			continue
 		if 'Error' not in tiles:
 			print_array(tiles)
 		else:
