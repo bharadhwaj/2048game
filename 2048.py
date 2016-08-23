@@ -139,6 +139,16 @@ def moveright(tiles):
 					tiles[row][column] = 2*tiles[row][column-1]
 					tiles[row][column-1] = 0
 	return tiles
+def restartgame():
+	restart = raw_input('Do you want to restart? (Y/N): ')
+	if restart == 'y' or restart == 'Y':
+		main()
+		return 0;
+	elif restart == 'n' or restart == 'N':
+		return 1;
+	else:
+		print 'Error: Try with valid inputs!'
+		return restartgame();
 
 def main():
     found = False
@@ -169,7 +179,12 @@ def main():
 			print_array(tiles)
 		else:
 			print 'Failed: Sorry! No move moves allowed!'
-			return
+			restart = restartgame()
+			if restart == 1:
+				return
+			
+
+
 
 		found = checker(tiles)
 		if found:
