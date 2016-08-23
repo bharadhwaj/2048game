@@ -1,6 +1,8 @@
+#!/usr/bin/env python
+
 from random import randrange, random
 
-def getelement():
+def get_element():
     return 2 if random() < 0.67 else 4
 
 def  checker(tiles):
@@ -15,7 +17,7 @@ def generate_element(tiles):
 	gen_x = randrange(0, 4)
 	gen_y = randrange(0, 4)
 
-	gen_n = getelement()
+	gen_n = get_element()
 
 	if tiles[gen_x][gen_y] != 0:
 		found = False
@@ -49,10 +51,9 @@ def moveup(tiles):
 					tiles[i][column] = tiles[i+1][column]
 					tiles[i+1][column] = 0
 					i -= 1
-				if i == 0:
-					if tiles[i][column] == tiles[i+1][column]:
-						tiles[i][column] = 2*tiles[i+1][column]
-						tiles[i+1][column] = 0
+				if tiles[i][column] == tiles[i+1][column]:
+					tiles[i][column] = 2*tiles[i+1][column]
+					tiles[i+1][column] = 0
 			else:	
 				if tiles[row-1][column] == tiles[row][column]:
 					tiles[row-1][column] = 2*tiles[row][column]
@@ -99,10 +100,9 @@ def moveleft(tiles):
 					tiles[row][i] = tiles[row][i+1]
 					tiles[row][i+1] = 0
 					i -= 1
-				if i == 0:
-					if tiles[row][i] == tiles[row][i+1]:
-						tiles[row][i] = 2*tiles[row][i+1]
-						tiles[row][i+1] = 0
+				if tiles[row][i] == tiles[row][i+1]:
+					tiles[row][i] = 2*tiles[row][i+1]
+					tiles[row][i+1] = 0
 			else:	
 				if tiles[row][column-1] == tiles[row][column]:
 					tiles[row][column-1] = 2*tiles[row][column]
