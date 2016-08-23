@@ -170,6 +170,10 @@ def main():
 		elif keystroke == 'd' or keystroke == 'D':
 			tiles = moveright(tiles)
 			tiles = generate_element(tiles)
+		elif keystroke == 'r' or keystroke == 'R':
+			restart = restartgame()
+			if restart == 1:
+				continue
 		elif keystroke == 'z' or keystroke == 'Z':
 			break
 		else:
@@ -178,17 +182,13 @@ def main():
 		if 'Error' not in tiles:
 			print_array(tiles)
 		else:
-			print 'Failed: Sorry! No move moves allowed!'
+			print 'Failed: Sorry! No more moves possible!'
 			restart = restartgame()
 			if restart == 1:
 				return
-			
-
-
-
 		found = checker(tiles)
 		if found:
-			print 'Success. You won the game.'
+			print 'Success. You won the game. Congratulations.'
 			return
 
 
