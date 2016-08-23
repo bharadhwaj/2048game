@@ -11,3 +11,5 @@ This is a python simulation for famous game 2048.
 * Use 'a' for LEFT movement.
 * Use 's' for DOWN movement.
 * Use 'd' for RIGHT movement.
+* Use 'r' to restart game while playing.
+* Use 'z' to quit the game.
